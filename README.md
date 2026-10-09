@@ -36,3 +36,9 @@ Instagram üzerinde sizi takip etmeyenleri ve zaman içinde takipten çıkanlar�
 ## 📜 Lisans
 
 Bu proje **GNU General Public License v3.0** lisansı ile korunmaktadır. Detaylı bilgi için [LICENSE](LICENSE) dosyasına göz atabilirsiniz.
+
+---
+
+## Geliştirilme Aşamasındadır
+- Analiz 1-2 dakika sürebilir çünkü ınstagramın anlamaması için verileri insan hızında okur
+- Geri takip etmeyenler listesinde 1-2 kişi hata payı vardır.
