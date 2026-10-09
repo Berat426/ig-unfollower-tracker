@@ -40,5 +40,5 @@ Bu proje **GNU General Public License v3.0** lisansı ile korunmaktadır. Detayl
 ---
 
 ## Geliştirilme Aşamasındadır
-- Analiz 1-2 dakika sürebilir çünkü ınstagramın anlamaması için verileri insan hızında okur
+- Analiz 1-2 dakika sürebilir çünkü ınstagramın anlamaması için verileri insan hızında okur.
 - Geri takip etmeyenler listesinde 1-2 kişi hata payı vardır.
