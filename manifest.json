@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "IG Unfollower Tracker",
+  "version": "1.0.0",
+  "description": "Berat Ali Karadaş tarafından geliştirilmiş bir Instagram takipçi izleme eklentisidir.",
+  "author": "Berat Ali Karadaş",
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "IG Unfollower Tracker"
+  },
+  "permissions": [
+    "storage",
+    "cookies"
+  ],
+  "host_permissions": [
+    "https://www.instagram.com/*",
+    "https://*.instagram.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://www.instagram.com/*", "https://*.instagram.com/*"],
+      "js": ["content.js"]
+    }
+  ]
+}
