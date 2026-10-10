@@ -11,9 +11,8 @@ const statusBox = document.getElementById('status');
 const progressBar = document.getElementById('progress');
 const unfollowerList = document.getElementById('unfollowerList');
 
-// Otomatik Güncelleme Kontrolü
-const GITHUB_MANIFEST_URL = "https://raw.githubusercontent.com/Berat426/ig-takipci-cikarici-izleyicisi/main/manifest.json";
-const GITHUB_ZIP_URL = "https://github.com/Berat426/ig-takipci-cikarici-izleyicisi/archive/refs/heads/main.zip";
+const GITHUB_MANIFEST_URL = "https://raw.githubusercontent.com/Berat426/ig-unfollower-tracker/main/manifest.json";
+const GITHUB_ZIP_URL = "https://github.com/Berat426/ig-unfollower-tracker/archive/refs/heads/main.zip";
 
 async function otomatikGuncellemeKontrolu() {
   try {
@@ -39,7 +38,7 @@ async function otomatikGuncellemeKontrolu() {
   }
 }
 
-// Popup açıldığında arka planda güncelleme kontrol et
+
 otomatikGuncellemeKontrolu();
 
 startBtn.addEventListener('click', async () => {
