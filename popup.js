@@ -11,6 +11,36 @@ const statusBox = document.getElementById('status');
 const progressBar = document.getElementById('progress');
 const unfollowerList = document.getElementById('unfollowerList');
 
+// Otomatik Güncelleme Kontrolü
+const GITHUB_MANIFEST_URL = "https://raw.githubusercontent.com/Berat426/ig-takipci-cikarici-izleyicisi/main/manifest.json";
+const GITHUB_ZIP_URL = "https://github.com/Berat426/ig-takipci-cikarici-izleyicisi/archive/refs/heads/main.zip";
+
+async function otomatikGuncellemeKontrolu() {
+  try {
+    const response = await fetch(GITHUB_MANIFEST_URL);
+    if (!response.ok) return;
+
+    const remoteManifest = await response.json();
+    const localManifest = chrome.runtime.getManifest();
+
+    if (remoteManifest.version !== localManifest.version) {
+      const updateNotice = document.getElementById('updateNotice');
+      const updateBtn = document.getElementById('updateBtn');
+      
+      if (updateNotice && updateBtn) {
+        updateNotice.style.display = 'block';
+        updateBtn.addEventListener('click', () => {
+          chrome.tabs.create({ url: GITHUB_ZIP_URL });
+        });
+      }
+    }
+  } catch (err) {
+    console.warn("[IG Tracker] Güncelleme kontrolü yapılamadı:", err);
+  }
+}
+
+// Popup açıldığında arka planda güncelleme kontrol et
+otomatikGuncellemeKontrolu();
 
 startBtn.addEventListener('click', async () => {
   startBtn.disabled = true;
@@ -43,18 +73,15 @@ startBtn.addEventListener('click', async () => {
         return;
       }
 
-      
       const rawTakipEdilenler = response.takipEdilenler || [];
       const rawTakipciler = response.takipciler || [];
 
-      
       const guncelTakipcilerSet = new Set(rawTakipciler.map(u => u.toLowerCase().trim()));
       const guncelTakipEdilenlerSet = new Set(rawTakipEdilenler.map(u => u.toLowerCase().trim()));
 
       const guncelTakipciler = Array.from(guncelTakipcilerSet);
       const guncelTakipEdilenler = Array.from(guncelTakipEdilenlerSet);
 
-      
       const geriTakipEtmeyenler = guncelTakipEdilenler.filter(
         (kullanici) => !guncelTakipcilerSet.has(kullanici)
       );
@@ -62,7 +89,6 @@ startBtn.addEventListener('click', async () => {
       statusBox.innerText = 'Geçmiş verilerle karşılaştırılıyor...';
       progressBar.style.width = '75%';
 
-      
       chrome.storage.local.get(['kayitliTakipciler'], (result) => {
         const eskiTakipciler = (result.kayitliTakipciler || []).map(u => u.toLowerCase().trim());
         unfollowerList.innerHTML = '';
@@ -73,7 +99,6 @@ startBtn.addEventListener('click', async () => {
 
         statusBox.innerText = 'Analiz Tamamlandı!';
 
-        
         const addListItem = (text, style = {}) => {
           const li = document.createElement('li');
           li.textContent = text;
@@ -81,7 +106,6 @@ startBtn.addEventListener('click', async () => {
           unfollowerList.appendChild(li);
         };
 
-        
         if (eskiTakipciler.length === 0) {
           addListItem(
             `ℹ️ İlk tarama hafızaya alındı (${guncelTakipciler.length} takipçi). Takipten çıkanlar bir sonraki analizde kıyaslanacak.`,
@@ -102,7 +126,6 @@ startBtn.addEventListener('click', async () => {
           );
         }
 
-        
         addListItem(
           `⚠️ Seni Geri Takip Etmeyenler (${geriTakipEtmeyenler.length}):`,
           { color: '#eab308', fontWeight: 'bold', marginTop: '12px' }
@@ -111,7 +134,6 @@ startBtn.addEventListener('click', async () => {
           addListItem(`@${k}`);
         });
 
-        
         chrome.storage.local.set({ kayitliTakipciler: guncelTakipciler }, () => {
           progressBar.style.width = '100%';
           startBtn.disabled = false;

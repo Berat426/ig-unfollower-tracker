@@ -14,7 +14,8 @@
   ],
   "host_permissions": [
     "https://www.instagram.com/*",
-    "https://*.instagram.com/*"
+    "https://*.instagram.com/*",
+    "https://raw.githubusercontent.com/*"
   ],
   "content_scripts": [
     {
